@@ -1,0 +1,216 @@
+/* 동글동글한 웹폰트 '고운돋움' 불러오기 (반드시 파일 맨 위에 있어야 함) */
+@import url("https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap");
+
+/* =========================================
+   내 과제 아카이브 스타일
+   컨셉: 해 질 녘 도시, 창밖 불빛이 번지는 밤
+   ========================================= */
+
+/* ---------- 1. 색 변수 (여기만 바꾸면 전체 분위기가 바뀜) ---------- */
+:root {
+  --sky-top: #0e1322;                    /* 밤하늘 맨 위 */
+  --sky-mid: #1d2338;                    /* 짙은 남색 */
+  --sky-low: #3b3552;                    /* 보랏빛 노을 */
+  --sky-glow: #7a5563;                   /* 지평선에 남은 빛 */
+  --building: #0a0d17;                   /* 건물 실루엣 */
+  --text: #e9e6f0;                       /* 기본 글자색 */
+  --text-dim: #a49fb5;                   /* 흐린 글자색 */
+  --accent: #f3c58b;                     /* 가로등 불빛 같은 포인트 색 */
+  --glass: rgba(255, 255, 255, 0.045);   /* 유리창 느낌의 카드 배경 */
+  --glass-hover: rgba(255, 255, 255, 0.09);
+  --line: rgba(255, 255, 255, 0.1);      /* 얇은 테두리 */
+}
+
+/* ---------- 2. 기본 초기화 ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;   /* 여백·테두리를 포함해 크기 계산 → 모바일에서 넘침 방지 */
+}
+
+html {
+  background-color: var(--sky-top);   /* 배경이 그려지기 전·스크롤 끝에서 보이는 색 */
+}
+
+/* ---------- 3. 페이지 전체 ---------- */
+body {
+  margin: 0 auto;
+  max-width: 600px;                   /* 큰 화면에서도 글이 너무 길게 퍼지지 않게 */
+  min-height: 100vh;
+  min-height: 100dvh;                 /* 모바일 주소창 높이를 반영 (지원하는 브라우저만) */
+  padding: clamp(56px, 14vh, 120px) 20px 32vh;   /* 아래쪽은 건물 실루엣 자리 */
+  font-family: "Gowun Dodum", system-ui, -apple-system, "Apple SD Gothic Neo",
+    "Malgun Gothic", sans-serif;      /* 고운돋움 우선, 못 불러오면 기본 고딕 */
+  color: var(--text);
+  line-height: 1.6;
+  word-break: keep-all;               /* 한글이 단어 중간에서 끊기지 않게 */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 밤하늘 그라데이션 + 번진 도시 불빛 (화면에 고정) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 15% 72%, rgba(243, 197, 139, 0.18) 0, transparent 20%),
+    radial-gradient(circle at 82% 62%, rgba(255, 140, 160, 0.13) 0, transparent 22%),
+    radial-gradient(circle at 58% 88%, rgba(140, 180, 255, 0.12) 0, transparent 24%),
+    linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 40%,
+      var(--sky-low) 75%, var(--sky-glow) 100%);
+}
+
+/* 화면 아래쪽 건물 실루엣 + 드문드문 켜진 창문 불빛 */
+body::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 24vh;
+  z-index: -1;
+  background:
+    radial-gradient(rgba(243, 197, 139, 0.45) 1px, transparent 1.6px) 0 0 / 14px 18px,
+    radial-gradient(rgba(243, 197, 139, 0.25) 1px, transparent 1.6px) 7px 9px / 23px 29px,
+    var(--building);
+  /* 다각형으로 잘라 빌딩 스카이라인 모양을 만듦 */
+  clip-path: polygon(
+    0% 100%, 0% 55%, 6% 55%, 6% 35%, 12% 35%, 12% 60%, 17% 60%, 17% 20%,
+    21% 20%, 21% 10%, 23% 10%, 23% 20%, 27% 20%, 27% 50%, 33% 50%, 33% 30%,
+    40% 30%, 40% 65%, 45% 65%, 45% 40%, 50% 40%, 50% 15%, 55% 15%, 55% 45%,
+    61% 45%, 61% 25%, 67% 25%, 67% 55%, 72% 55%, 72% 5%, 75% 5%, 75% 0%,
+    76% 0%, 76% 5%, 79% 5%, 79% 45%, 85% 45%, 85% 30%, 91% 30%, 91% 60%,
+    96% 60%, 96% 40%, 100% 40%, 100% 100%
+  );
+}
+
+/* ---------- 4. 제목 ---------- */
+.title {
+  margin: 0 0 14px;
+  font-size: clamp(1.75rem, 6vw, 2.5rem);   /* 화면 폭에 따라 글자 크기 자동 조절 */
+  font-weight: 400;                          /* 고운돋움은 굵기가 한 가지뿐이라 400으로 고정 */
+  letter-spacing: -0.01em;
+  text-shadow: 0 0 24px rgba(243, 197, 139, 0.25);   /* 불빛이 은은하게 번지는 효과 */
+}
+
+/* 제목 아래 가로등 불빛처럼 사라지는 짧은 선 */
+.title::after {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 2px;
+  margin-top: 18px;
+  border-radius: 2px;        /* 선 끝도 동글게 */
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+/* ---------- 5. 한 줄 소개 ---------- */
+.intro {
+  margin: 0 0 40px;
+  font-size: 1rem;
+  color: var(--text-dim);
+  letter-spacing: 0.01em;
+}
+
+/* ---------- 6. 과제 목록 ---------- */
+.assignment-list {
+  list-style: none;          /* 기본 점(•) 없애기 */
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;                 /* 카드 사이 간격 */
+  counter-reset: assignment; /* 01, 02… 자동 번호를 위한 카운터 */
+}
+
+.assignment-item {
+  counter-increment: assignment;
+}
+
+/* 각 과제 링크를 유리창 같은 카드로 */
+.assignment-link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 56px;          /* 손가락으로 누르기 편한 높이 */
+  padding: 18px 22px;
+  font-size: 1.02rem;
+  color: var(--text);
+  text-decoration: none;
+  background: var(--glass);
+  border: 1px solid var(--line);
+  border-radius: 18px;       /* 폰트에 맞춰 모서리도 더 둥글게 */
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);   /* 뒤 배경을 살짝 흐리게 → 젖은 유리창 느낌 */
+  transition: background 0.3s, border-color 0.3s, transform 0.3s;
+}
+
+/* 앞쪽 번호 (01, 02…) — HTML을 건드리지 않고 CSS로 표시 */
+.assignment-link::before {
+  content: counter(assignment, decimal-leading-zero);
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  opacity: 0.85;
+  font-variant-numeric: tabular-nums;   /* 숫자 폭을 일정하게 */
+}
+
+/* 오른쪽 화살표 */
+.assignment-link::after {
+  content: "→";
+  margin-left: auto;
+  color: var(--text-dim);
+  transition: transform 0.3s, color 0.3s;
+}
+
+/* 마우스를 올렸을 때 */
+.assignment-link:hover {
+  background: var(--glass-hover);
+  border-color: rgba(243, 197, 139, 0.35);
+  transform: translateY(-2px);
+}
+
+.assignment-link:hover::after {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
+/* 키보드(Tab)로 이동했을 때 위치가 보이도록 */
+.assignment-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ---------- 7. 휴대폰 화면 ---------- */
+@media (max-width: 480px) {
+  body {
+    padding: 64px 16px 28vh;
+  }
+
+  .intro {
+    margin-bottom: 32px;
+  }
+
+  .assignment-link {
+    gap: 12px;
+    padding: 16px 18px;
+    font-size: 0.97rem;
+  }
+
+  body::after {
+    height: 20vh;   /* 작은 화면에서는 건물을 조금 낮게 */
+  }
+}
+
+/* ---------- 8. 움직임 줄이기 설정을 켠 사용자 배려 ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .assignment-link,
+  .assignment-link::after {
+    transition: none;
+  }
+
+  .assignment-link:hover {
+    transform: none;
+  }
+}
